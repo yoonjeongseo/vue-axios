@@ -1,28 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <form v-on:submit.prevent="submitForm">
+    <div>
+      <label for="uName">아이디</label>
+      <input id="uName" type="text" v-model="uName">
+    </div>
+    <button type="submit">btn</button>
+  </form>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data: function() {
+    return {
+      uName: ''
+    }
+  },
+  methods: {
+    submitForm: function() {
+
+      var url = 'https://jsonplaceholder.typicode.com/users';
+      var data = {
+        uName: this.uName
+      }
+      axios.post(url, data)
+        .then(function(sss) {
+          console.log(sss, "jhkjhkj");
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
